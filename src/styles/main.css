@@ -1,0 +1,249 @@
+html, body {
+    margin: 0;
+    background: radial-gradient(1200px 600px at 10% 10%, #050b10 0%, #0a1219 40%, #0b0f15 100%);
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color: #e9f1f7;
+    height: 100%;
+}
+
+.wrapper {
+    width: 900px;
+    max-width: calc(100% - 80px);
+    height: 820px;
+    max-height: calc(100vh - 40px);
+    margin: 24px auto;
+    background-color: #0c1318;
+    border-radius: 12px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Header */
+.banner {
+    height: 84px;
+    width: 100%;
+    padding: 18px 24px;
+    background: linear-gradient(90deg,#0f1720 0,#172b3b 100%);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.banner h1 {
+    font-weight: 600;
+    font-size: 20px;
+    margin: 0;
+    color: #eaf2ff;
+}
+.banner #status {
+    font-size: 13px;
+    opacity: .9;
+    color: #99caff;
+}
+
+/* Chat area */
+#historyMsg, #history {
+    flex: 1 1 auto;
+    background: transparent;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Base message bubble */
+.msg {
+    max-width: 78%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    line-height: 1.4;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    word-break: break-word;
+}
+
+/* Other users' messages */
+.msg.other {
+    align-self: flex-start;
+    background: linear-gradient(180deg, #111b25, #1a2735);
+    color: #d8e8ff;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px 14px 14px 6px;
+}
+
+/* Self messages */
+.msg.me {
+    align-self: flex-end;
+    background: linear-gradient(180deg,#457aff,#7b61ff);
+    color: #ffffff;
+    border-radius: 14px 14px 6px 14px;
+    border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* System message */
+.msg.system {
+    align-self: center;
+    background: #0e1822;
+    color: #ff6f6f;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 10px;
+    opacity: 0.9;
+}
+
+/* Timestamp / meta */
+.msg .meta, .timespan {
+    display: block;
+    font-size: 12px;
+    opacity: .75;
+    margin-top: 6px;
+    color: rgba(230,240,255,0.8);
+}
+
+/* Images */
+#historyMsg img, #history img {
+    max-width: 420px;
+    border-radius: 8px;
+    display: block;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+}
+
+/* Controls */
+.controls {
+    padding: 12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+}
+
+/* File upload */
+.imageLable {
+    position: relative;
+}
+.imageLable input[type="button"] {
+    background: transparent;
+    border: none;
+    color: #7db4ff;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 6px;
+}
+#sendImage {
+    position: absolute;
+    width: 40px;
+    left: 0;
+    top: 0;
+    height: 36px;
+    opacity: 0;
+}
+
+/* Message input */
+#messageInput {
+    flex: 1 1 auto;
+    min-height: 48px;
+    max-height: 140px;
+    resize: none;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.06);
+    font-size: 14px;
+    outline: none;
+    background: #101922;
+    color: #e4f0ff;
+}
+#messageInput::placeholder {
+    color: rgba(223,240,255,0.5);
+}
+
+/* Send button */
+#sendBtn {
+    width: 84px;
+    height: 48px;
+    border-radius: 10px;
+    background: linear-gradient(180deg,#ff4b4b,#c70000);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 10px 28px rgba(199,0,0,0.25);
+}
+#sendBtn:hover {
+    background: linear-gradient(180deg,#ff6b6b,#ff2b2b);
+}
+
+/* Login overlay */
+#loginWrapper {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(2,6,10,0.88);
+    text-align: center;
+    color: #fff;
+    display: block;
+    padding-top: 120px;
+}
+#nickWrapper {
+    display: block;
+    margin-top: 12px;
+}
+#nickWrapper input[type="text"] {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+    width: 240px;
+    margin-right: 8px;
+    font-size: 14px;
+    background: #0d1823;
+    color: #e2eeff;
+}
+
+/* Scrollbar */
+#historyMsg::-webkit-scrollbar,
+#history::-webkit-scrollbar {
+    width: 10px;
+}
+#historyMsg::-webkit-scrollbar-thumb,
+#history::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 700px), (max-width: 1000px) {
+    .wrapper {
+        width: 100%;
+        margin: 0;
+        height: 100vh;
+        border-radius: 0;
+        max-height: none;
+    }
+    .banner { padding: 12px; }
+    #historyMsg, #history { padding: 12px; }
+    #sendBtn { width: 70px; height: 44px; }
+}
+/* default msg (fallback if no class is applied) */
+.msg {
+    color: #e6eef3; /* default readable text */
+    background: #101820; /* subtle dark bubble */
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+/* messages from server/system */
+.msg.system {
+    align-self: center;
+    background: #0f1924;
+    color: #9cc3ff;
+    border: 1px solid rgba(255,255,255,0.05);
+    font-size: 13px;
+    font-style: italic;
+    padding: 8px 12px;
+    border-radius: 8px;
+    opacity: 0.9;
+}
+

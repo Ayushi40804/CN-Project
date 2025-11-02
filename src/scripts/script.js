@@ -5,12 +5,28 @@ window.onload = function() {
 
 var CNProject = function() {
     this.socket = null;
+    this.role = localStorage.getItem('cn_role') || 'writer'; // 'writer' or 'reader'
 };
 
 CNProject.prototype = {
     init: function() {
         var that = this;
         this.socket = io.connect();
+        // Initialize role toggle UI
+        var roleToggle = document.getElementById('roleToggle');
+        if (roleToggle) {
+            roleToggle.textContent = that.role === 'writer' ? 'Writer' : 'Reader';
+            roleToggle.classList.toggle('reader', that.role === 'reader');
+            roleToggle.addEventListener('click', function() {
+                that.role = that.role === 'writer' ? 'reader' : 'writer';
+                localStorage.setItem('cn_role', that.role);
+                roleToggle.textContent = that.role === 'writer' ? 'Writer' : 'Reader';
+                roleToggle.classList.toggle('reader', that.role === 'reader');
+                that._updateRoleUI();
+                that._displayNewMsg('system', 'Switched to ' + that.role + ' mode', 'red');
+            }, false);
+        }
+        that._updateRoleUI();
 
         this.socket.on('connect', function() {
             document.getElementById('info').textContent = 'get yourself a nickname :)';
@@ -62,6 +78,10 @@ CNProject.prototype = {
         }, false);
 
         document.getElementById('sendBtn').addEventListener('click', function() {
+            if (that.role === 'reader') {
+                that._displayNewMsg('system', 'You are in reader mode — switch to Writer to send messages.', 'red');
+                return;
+            }
             var messageInput = document.getElementById('messageInput'),
                 msg = messageInput.value,
                 color = '#e6eef3';
@@ -78,6 +98,10 @@ CNProject.prototype = {
                 msg = messageInput.value,
                 color = '#e6eef3';
             if (e.keyCode === 13 && msg.trim().length !== 0) {
+                if (that.role === 'reader') {
+                    that._displayNewMsg('system', 'You are in reader mode — switch to Writer to send messages.', 'red');
+                    return;
+                }
                 messageInput.value = '';
                 that.socket.emit('postMsg', msg, color);
                 that._displayNewMsg('me', msg, color);
@@ -89,6 +113,11 @@ CNProject.prototype = {
         }, false);
 
         document.getElementById('sendImage').addEventListener('change', function() {
+            if (that.role === 'reader') {
+                that._displayNewMsg('system', 'You are in reader mode — switch to Writer to send images.', 'red');
+                this.value = '';
+                return;
+            }
             if (this.files.length !== 0) {
                 var file = this.files[0],
                     reader = new FileReader(),
@@ -105,6 +134,25 @@ CNProject.prototype = {
                 reader.readAsDataURL(file);
             }
         }, false);
+    },
+
+    _updateRoleUI: function() {
+        var isReader = this.role === 'reader';
+        var messageInput = document.getElementById('messageInput');
+        var sendBtn = document.getElementById('sendBtn');
+        var sendImage = document.getElementById('sendImage');
+        if (messageInput) {
+            messageInput.disabled = isReader;
+            messageInput.placeholder = isReader ? 'Reader mode — sending disabled' : 'enter to send';
+            messageInput.classList.toggle('disabled', isReader);
+        }
+        if (sendBtn) {
+            sendBtn.disabled = isReader;
+            sendBtn.classList.toggle('disabled', isReader);
+        }
+        if (sendImage) {
+            sendImage.disabled = isReader;
+        }
     },
 
     _displayNewMsg: function(user, msg, color) {

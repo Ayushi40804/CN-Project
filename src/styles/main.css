@@ -44,6 +44,23 @@ html, body {
     color: #99caff;
 }
 
+/* role toggle button */
+.role-btn {
+    margin-left: 12px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: linear-gradient(180deg,#243142,#1a2735);
+    color: #dbeeff;
+    cursor: pointer;
+    font-size: 13px;
+}
+.role-btn.reader {
+    background: linear-gradient(180deg,#333a40,#2a363d);
+    color: #ffdfdf;
+    border-color: rgba(255,110,110,0.14);
+}
+
 /* Chat area */
 #historyMsg, #history {
     flex: 1 1 auto;

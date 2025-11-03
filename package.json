@@ -7,8 +7,12 @@
         "express": "3.4.x",
         "socket.io": "0.9.x"
     },
-    "engines": {
-        "node": ">=20.0.0",
-        "npm": ">=8.0.0"
-    }
+"engines": {
+    "node": ">=20.0.0",
+    "npm": ">=8.0.0"
+},
+"scripts": {
+    "start": "node server.js"
+}
+
 }

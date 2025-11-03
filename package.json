@@ -8,7 +8,7 @@
         "socket.io": "0.9.x"
     },
     "engines": {
-        "node": ">=LATEST_VERSION",
+        "node": ">=20.0.0",
         "npm": ">=8.0.0"
     }
 }
